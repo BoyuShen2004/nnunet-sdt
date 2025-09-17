@@ -21,21 +21,21 @@ You added three main files to support SDT-based training:
 1. **SDT Transform**  
    - Location:  
      ```
-     /orcd/data/edboyden/002/shenb/nnUNet/nnunetv2/training/data_augmentation/custom_transforms/sdt.py
+     /nnUNet/nnunetv2/training/data_augmentation/custom_transforms/sdt.py
      ```
    - Purpose: Converts segmentation masks into Signed Distance Transform maps during data augmentation.  
 
 2. **Custom Trainer**  
    - Location:  
      ```
-     /orcd/data/edboyden/002/shenb/nnUNet/nnunetv2/training/nnUNetTrainer/variants/loss/nnUNetTrainerSDT.py
+     /nnUNet/nnunetv2/training/nnUNetTrainer/variants/loss/nnUNetTrainerSDT.py
      ```
    - Purpose: Defines the `nnUNetTrainerSDT` class, which switches loss to MSE and aligns output channels with SDT targets.  
 
 3. **SDT to Mask Post-Processor**  
    - Location:  
      ```
-     scripts/sdt_to_mask.py  (or any folder, since it is standalone)
+     sdt_to_mask.py  (or any folder, since it is standalone)
      ```
    - Purpose: Converts predicted SDT maps (`.npz`) into binary masks (`.tif`). Can be placed anywhere on your system because it is run manually after prediction.
 
