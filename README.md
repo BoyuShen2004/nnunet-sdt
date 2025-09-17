@@ -109,4 +109,4 @@ This script is not tied to the nnU-Net framework. You can place it in `scripts/`
 Dataset stays the same as nnU-Net (images, labels as masks). No SDT labels required.
 
 ```bash
-nnUNetv2_plan_and_preprocess -d <DATASET_ID>
+nnUNetv2_plan_and_preprocess -d <DATASET_ID> --verify_dataset_integrity
