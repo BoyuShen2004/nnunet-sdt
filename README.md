@@ -149,3 +149,15 @@ python sdt_to_mask.py \
 Outputs:
 - `*_mask.tif` (binary mask)
 - `*_sdt.tif` (optional raw SDT)
+
+---
+
+## 🔍 Key Differences Recap
+
+| Aspect           | nnU-Net (vanilla)       | nnUNet-SDT              |
+|------------------|-------------------------|--------------------------|
+| **Target**       | Discrete masks          | Continuous SDT maps      |
+| **Loss**         | Dice + CE               | MSE (regression)         |
+| **Output channels** | 1 (binary) / N (classes) | 1 (regressed SDT)        |
+| **Post-processing** | Argmax / Softmax      | Threshold SDT → mask      |
+| **Added files**  | None                    | `sdt.py`, `nnUNetTrainerSDT.py`, `sdt_to_mask.py` |
