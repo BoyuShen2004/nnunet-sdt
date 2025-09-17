@@ -110,3 +110,6 @@ Dataset stays the same as nnU-Net (images, labels as masks). No SDT labels requi
 
 ```bash
 nnUNetv2_plan_and_preprocess -d <DATASET_ID> --verify_dataset_integrity
+```
+
+### 2. Train nnUNet-SDT
