@@ -18,3 +18,15 @@ This repository documents how **vanilla nnU-Net v2** was extended into **nnUNet-
 
 Your modifications introduced three new files:
 
+nnunetv2/
+├─ training/
+│ ├─ data_augmentation/
+│ │ └─ custom_transforms/
+│ │ └─ sdt.py # NEW: mask → signed distance transform transform
+│ └─ nnUNetTrainer/
+│ └─ variants/
+│ └─ loss/
+│ └─ nnUNetTrainerSDT.py # NEW: trainer with SDT regression + MSE loss
+└─ ...
+scripts/
+└─ sdt_to_mask.py # NEW: converts predicted SDT maps back to masks
