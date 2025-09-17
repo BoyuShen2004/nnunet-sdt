@@ -1,6 +1,6 @@
 # nnUNet-SDT: Signed Distance Transform Regression in nnU-Net v2
 
-This repository documents how **vanilla [nnU-Net v2](https://github.com/MIC-DKFZ/nnUNet)** was extended into **nnUNet-SDT**, a model that learns to regress **Signed Distance Transforms (SDTs)** of segmentation masks instead of (or in addition to) predicting categorical labels.  
+This repository documents how vanilla [nnU-Net v2](https://github.com/MIC-DKFZ/nnUNet) was extended into **nnUNet-SDT**, a model that learns to regress **Signed Distance Transforms (SDTs)** of segmentation masks instead of (or in addition to) predicting categorical labels.  
 
 ---
 
