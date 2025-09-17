@@ -161,3 +161,43 @@ Outputs:
 | **Output channels** | 1 (binary) / N (classes) | 1 (regressed SDT)        |
 | **Post-processing** | Argmax / Softmax      | Threshold SDT → mask      |
 | **Added files**  | None                    | `sdt.py`, `nnUNetTrainerSDT.py`, `sdt_to_mask.py` |
+
+---
+
+## 🧪 Sanity Checks
+
+- Ensure **output channels = target channels**.  
+- If you see warnings like:
+
+```text
+Using a target size (B,1,H,W) different to input size (B,2,H,W)
+```
+
+→ you left the network at 2 outputs instead of 1. Fix in nnUNetTrainerSDT.py.
+
+---
+
+## 📖 Citation
+If you use this code, please cite:
+- The original nnU-Net papers, and  
+- Relevant SDT supervision papers if you adapt the approach further.
+
+---
+
+## 📜 License
+Same license as nnU-Net (Apache 2.0) unless otherwise stated.
+
+---
+
+## ❓ FAQ
+
+**Q: Why not just use Dice loss?**  
+A: Dice compares discrete masks. SDT regression enforces smooth, boundary-aware supervision.
+
+**Q: Do I need new ground truth files?**  
+A: No. SDTs are generated dynamically from your binary labels.
+
+**Q: Can I combine SDT with masks?**  
+A: Yes — by outputting 2 channels (mask + SDT) and adjusting the trainer & loss accordingly.
+
+---
