@@ -121,6 +121,7 @@ srun nnUNetv2_train <DATASET_ID> <CONFIG> <FOLD> -tr nnUNetTrainerSDT
 
 ### 3. Predict
 Run prediction with your trainer:
+
 ```bash
 nnUNetv2_predict \
   -i <IMAGES_TS> \
@@ -132,3 +133,19 @@ nnUNetv2_predict \
   --disable_tta \
   --save_probabilities
 ```
+
+This writes `.npz` files with predicted SDT arrays.
+
+### 4. Convert SDT → Mask
+Post-process with `sdt_to_mask.py`:
+
+```bash
+python sdt_to_mask.py \
+  --pred_dir <PRED_DIR> \
+  --out_mask_dir <MASK_DIR> \
+  --out_sdt_dir <SDT_TIF_DIR>
+```
+
+Outputs:
+- `*_mask.tif` (binary mask)
+- `*_sdt.tif` (optional raw SDT)
