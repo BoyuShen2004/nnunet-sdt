@@ -113,3 +113,22 @@ nnUNetv2_plan_and_preprocess -d <DATASET_ID> --verify_dataset_integrity
 ```
 
 ### 2. Train nnUNet-SDT
+Use the custom trainer:
+
+```bash
+srun nnUNetv2_train <DATASET_ID> <CONFIG> <FOLD> -tr nnUNetTrainerSDT
+```
+
+### 3. Predict
+Run prediction with your trainer:
+```bash
+nnUNetv2_predict \
+  -i <IMAGES_TS> \
+  -o <PRED_DIR> \
+  -d <DATASET> \
+  -c <CONFIG> \
+  -tr nnUNetTrainerSDT \
+  -f <FOLD> \
+  --disable_tta \
+  --save_probabilities
+```
