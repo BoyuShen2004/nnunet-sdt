@@ -206,22 +206,70 @@ A: Yes — by outputting 2 channels (mask + SDT) and adjusting the trainer & los
 
 September 20 Update
 
----
-
-Two new utility scripts were added to help **clean up segmentation outputs** and **convert SDT predictions into final masks with noise removal**:
+Two new utility scripts were added to improve **mask cleaning** and **SDT post-processing**:
 
 1. **remove_unconnected_small_components.py**  
-   - Purpose: Post-process `.tif` mask files by removing small, disconnected foreground components.  
-   - Uses `connected-components-3d` (cc3d) to identify all components and keeps only the largest one (the main object, e.g. worm body).  
-   - Input: directory of `.tif` masks  
-   - Output: cleaned masks written to a new directory (noise-free).  
+   - Purpose: Cleans `.tif` masks by removing disconnected noise (small blobs).  
+   - Keeps only the largest connected component (e.g., main worm body).  
+   - Useful for denoising masks after training or manual annotation.  
 
 2. **sdt_to_mask_denoise.py**  
-   - Purpose: Extended version of `sdt_to_mask.py` that converts `.npz` SDT predictions into binary masks **and** automatically removes spurious small blobs.  
-   - Combines SDT → mask thresholding with largest-component filtering in one step.  
-   - Input: directory of `.npz` predictions (from `nnUNetv2_predict`)  
-   - Output:  
-     - `*_mask.tif` — cleaned binary masks (largest component only)  
-     - Optionally `*_sdt.tif` — raw SDT values saved for inspection.  
+   - Purpose: Extends `sdt_to_mask.py` by not only converting `.npz` SDT predictions into binary masks, but also automatically denoising them.  
+   - Ensures that final outputs contain only the biologically relevant structure, without stray specks.  
+   - Optionally saves raw SDT maps as `.tif` for inspection.  
 
-Together, these scripts ensure that final masks are free of isolated specks (e.g., unconnected white dots) and retain only the biologically relevant main structure.
+---
+
+## 🛠️ Usage
+
+### `remove_unconnected_small_components.py`
+
+Keep only the largest component in all masks from a folder:
+
+```bash
+python remove_unconnected_small_components.py \
+  --in_dir /path/to/input_masks \
+  --out_dir /path/to/output_masks
+```
+
+Process just one file inside the input directory:
+
+```bash
+python remove_unconnected_small_components.py \
+  --in_dir /path/to/input_masks \
+  --out_dir /path/to/output_masks \
+  --file example_mask.tif
+```
+
+Process when you already have a single file path:
+
+```bash
+python remove_unconnected_small_components.py \
+  --in_dir /path/to/input_masks/example_mask.tif \
+  --out_dir /path/to/output_masks
+```
+
+### `sdt_to_mask_denoise.py`
+
+Convert SDT predictions (`.npz`) into cleaned binary masks:
+
+```bash
+python sdt_to_mask_denoise.py \
+  --pred_dir /path/to/npz_predictions \
+  --out_mask_dir /path/to/clean_masks \
+  --out_sdt_dir /path/to/save_raw_sdt
+```
+
+By default, only the largest connected component is preserved.
+
+If you prefer to use a minimum-size filter instead:
+
+```bash
+python sdt_to_mask_denoise.py \
+  --pred_dir /path/to/npz_predictions \
+  --out_mask_dir /path/to/clean_masks \
+  --min_size 500 \
+  --no_keep_largest
+```
+
+This workflow removes disconnected specks while ensuring the main object is retained in every output mask.
