@@ -203,3 +203,25 @@ A: No. SDTs are generated dynamically from your binary labels.
 A: Yes — by outputting 2 channels (mask + SDT) and adjusting the trainer & loss accordingly.
 
 ---
+
+September 20 Update
+
+---
+
+Two new utility scripts were added to help **clean up segmentation outputs** and **convert SDT predictions into final masks with noise removal**:
+
+1. **remove_unconnected_small_components.py**  
+   - Purpose: Post-process `.tif` mask files by removing small, disconnected foreground components.  
+   - Uses `connected-components-3d` (cc3d) to identify all components and keeps only the largest one (the main object, e.g. worm body).  
+   - Input: directory of `.tif` masks  
+   - Output: cleaned masks written to a new directory (noise-free).  
+
+2. **sdt_to_mask_denoise.py**  
+   - Purpose: Extended version of `sdt_to_mask.py` that converts `.npz` SDT predictions into binary masks **and** automatically removes spurious small blobs.  
+   - Combines SDT → mask thresholding with largest-component filtering in one step.  
+   - Input: directory of `.npz` predictions (from `nnUNetv2_predict`)  
+   - Output:  
+     - `*_mask.tif` — cleaned binary masks (largest component only)  
+     - Optionally `*_sdt.tif` — raw SDT values saved for inspection.  
+
+Together, these scripts ensure that final masks are free of isolated specks (e.g., unconnected white dots) and retain only the biologically relevant main structure.
