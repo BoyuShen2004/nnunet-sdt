@@ -12,6 +12,10 @@ This repository documents how vanilla [nnU-Net v2](https://github.com/MIC-DKFZ/n
 
 ---
 
+## September 16 Update
+
+---
+
 ## 📂 Added & Modified Files
 
 Your modifications introduced three new files:
