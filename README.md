@@ -261,6 +261,7 @@ python sdt_to_mask_denoise.py \
 ```
 
 By default, only the largest connected component is preserved.
+
 If you prefer to use a minimum-size filter instead:
 
 ```bash
